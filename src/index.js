@@ -52,10 +52,12 @@ class Todo extends Component {
           <div>
             <form onSubmit={this.handleSubmit}>
               <input
+                type="text"
+                class="form-control"
                 value={this.state.text}
                 onChange={e => this.handleChange(e)}
               />
-              <button>Add</button>
+              <button>Submit</button>
               <ol>
                 {this.state.list.map((item, index) => {
                   return (
