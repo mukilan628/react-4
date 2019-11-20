@@ -15,7 +15,9 @@ class Todo extends Component {
     super(props);
     this.state = {
       list: [],
-      text: ""
+      text: "",
+      createdTimeList: [],
+      createdTime: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -24,22 +26,41 @@ class Todo extends Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    this.setState(prevState => ({
-      list: prevState.list.concat(this.state.text),
-      text: ""
-    }));
+    //      createdTime: Date(Date.getTime()).toString()
+
+    if (this.state.text.length) {
+      // this.setState({
+      //   createdTime: Date(Date.now()).toString()
+      //});
+
+      console.log(this.state.createdTime);
+      this.setState(prevState => ({
+        list: prevState.list.concat(this.state.text),
+        text: "",
+        createdTimeList: prevState.createdTimeList.concat(
+          this.state.createdTime
+        )
+      }));
+    }
   }
 
   handleChange(e) {
     this.setState({
       text: e.target.value
     });
+    this.setState({
+      createdTime: Date(Date.now())
+        .toString()
+        .slice(4, 25)
+    });
   }
 
   removeItem(index) {
     const list = this.state.list;
     list.splice(index, 1);
-    this.setState({ list });
+    const createdTimeList = this.state.createdTimeList;
+    createdTimeList.splice(index, 1);
+    this.setState({ list, createdTimeList });
   }
 
   render() {
@@ -53,7 +74,7 @@ class Todo extends Component {
             <form onSubmit={this.handleSubmit}>
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 value={this.state.text}
                 onChange={e => this.handleChange(e)}
               />
@@ -67,11 +88,15 @@ class Todo extends Component {
                         onClose={() => this.removeItem(index)}
                       >
                         <Toast.Header>
-                          <strong>Note</strong>
-                          <small>11 mins ago</small>
+                          <strong>Note {index + 1}. </strong>
+                          <small>
+                            {"  Created         "}
+
+                            {this.state.createdTimeList[index]}
+                          </small>
                         </Toast.Header>
                         <Toast.Body className="mr-3 d-inline-block">
-                          {item}
+                          {item},{" "}
                         </Toast.Body>
                       </Toast>
                     </li>

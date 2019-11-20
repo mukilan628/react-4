@@ -12,4 +12,16 @@ h1 {
 
 body {
   background-color: aquamarine;
+  padding: 10px;
+}
+
+ol {
+  overflow: auto;
+  padding: 20px;
+}
+
+form {
+  padding: 10px;
+
+  overflow: auto;
 }
